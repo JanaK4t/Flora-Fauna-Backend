@@ -44,6 +44,10 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
+        if (user.getIdUser() != null && user.getIdUser().equals(0)) { 
+            user.setIdUser(null);
+        }
+
         User newUser = userService.save(user);
         return ResponseEntity.status(201).body(newUser);
     }
@@ -67,13 +71,11 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        if (userService.findById(id) == null) {
-            return ResponseEntity.notFound().build();
-        }
-        userService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
+public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+    
+    return ResponseEntity.noContent().build();
+
+}
 
     @GetMapping("/articulos/{articuloId}")
     public ResponseEntity<List<User>> findByArticulos_IdArticulo(@PathVariable Integer idArticulo) {
