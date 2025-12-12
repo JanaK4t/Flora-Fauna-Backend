@@ -41,10 +41,8 @@ public class UserService {
     }
 
     public User save(User user) {
-        String passwordHasheada = passwordEncoder.encode(user.getContrasena());
-        user.setContrasena(passwordHasheada);
-        return userRepository.save(user);
-    }
+    return userRepository.save(user); 
+}
 
     public User partialUpdate(User user){
         User existingUser = userRepository.findById(user.getIdUser()).orElse(null);

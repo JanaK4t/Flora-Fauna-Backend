@@ -6,12 +6,14 @@ import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 import java.util.List;
 
 
@@ -33,6 +35,8 @@ public class User {
 
     @Column(name = "contrasena", length = 50,nullable = false)
     private String contrasena;
+
+    
 
     @OneToMany
     private List<Articulo> articulos = new ArrayList<>();
