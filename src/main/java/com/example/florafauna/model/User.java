@@ -29,7 +29,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUser;
 
-    @JsonProperty("nombreUsuario") 
+    @JsonProperty("nombre") 
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
