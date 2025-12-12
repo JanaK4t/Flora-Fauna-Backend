@@ -16,6 +16,8 @@ import jakarta.persistence.Table;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 @Data
 @NoArgsConstructor
@@ -27,7 +29,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUser;
 
-    @Column(name = "nombreUsuario", length = 20,nullable = false, unique = true)
+    @JsonProperty("nombreUsuario")
+    @Column(length = 20,nullable = false, unique = true)
     private String nombre;
 
     @Column(name = "correo", length = 50,nullable = false, unique = true)
