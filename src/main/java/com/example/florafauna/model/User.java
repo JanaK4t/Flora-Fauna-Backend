@@ -29,9 +29,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUser;
 
-    @JsonProperty("nombreUsuario")
-    @Column(length = 20,nullable = false, unique = true)
-    private String nombre;
+    @JsonProperty("nombreUsuario") 
+    @Column(name = "nombre_usuario", nullable = false)
+    private String nombreUsuario;
 
     @Column(name = "correo", length = 50,nullable = false, unique = true)
     private String correo;
