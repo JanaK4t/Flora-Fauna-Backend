@@ -30,8 +30,8 @@ public class User {
     private Integer idUser;
 
     @JsonProperty("nombreUsuario") 
-    @Column(name = "nombre_usuario", nullable = false)
-    private String nombreUsuario;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 
     @Column(name = "correo", length = 50,nullable = false, unique = true)
     private String correo;
