@@ -22,7 +22,7 @@ public class Articulo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idArticulo;
 
-    @Column(name = "nombreArticulo", length = 60, nullable = false)
+    @Column(name = "nombre", length = 60, nullable = false)
     private String nombre;
 
     @Column(name = "descripcion",nullable = false)

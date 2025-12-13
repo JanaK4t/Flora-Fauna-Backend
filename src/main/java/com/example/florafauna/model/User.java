@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 import java.util.List;
 
@@ -46,5 +45,4 @@ public class User {
 
 
 
-//neon
 }
