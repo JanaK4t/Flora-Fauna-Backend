@@ -47,8 +47,8 @@ public class UserService {
     public User partialUpdate(User user){
         User existingUser = userRepository.findById(user.getIdUser()).orElse(null);
         if(existingUser != null){
-            if (user.getNombre() != null){
-                existingUser.setNombre(user.getNombre());
+            if (user.getNombreUsuario() != null){
+                existingUser.setNombreUsuario(user.getNombreUsuario());
             }
             if (user.getCorreo() != null){
                 existingUser.setCorreo(user.getCorreo());

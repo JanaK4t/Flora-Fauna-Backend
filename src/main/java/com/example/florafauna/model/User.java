@@ -15,7 +15,6 @@ import jakarta.persistence.OneToMany;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Data
@@ -28,9 +27,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUser;
 
-    @JsonProperty("nombre") 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
+    @Column(name = "nombre_usuario", nullable = false)
+    private String nombreUsuario;
 
     @Column(name = "correo", length = 50,nullable = false, unique = true)
     private String correo;
