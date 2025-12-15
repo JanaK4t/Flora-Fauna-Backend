@@ -3,6 +3,7 @@ package com.example.florafauna.controller.V1;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.florafauna.service.UserService;
+import com.example.florafauna.dto.LoginRequest;
 import com.example.florafauna.model.User;
+import com.example.florafauna.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
@@ -23,6 +26,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
@@ -86,7 +92,19 @@ public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         return ResponseEntity.ok(users);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        User user = userRepository.findByCorreo(request.getCorreo());
+
+        if (user != null && user.getContrasena().equals(request.getContrasena())) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
+        }
+    }
+}
+
    
 
 
-}
+
