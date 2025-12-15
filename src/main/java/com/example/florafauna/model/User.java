@@ -36,7 +36,7 @@ public class User {
     @Column(name = "contrasena", length = 50,nullable = false)
     private String contrasena;
 
-    @Column(name = "foto",columnDefinition = "TEXT")
+    @Column(name = "foto")
     private String foto;
 
     

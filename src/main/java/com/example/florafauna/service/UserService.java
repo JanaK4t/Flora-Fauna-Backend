@@ -56,6 +56,9 @@ public class UserService {
             if (user.getContrasena() != null){
                 existingUser.setContrasena(user.getContrasena());
             }
+            if (user.getFoto() != null){
+                existingUser.setFoto(user.getFoto());
+            }
             
             return userRepository.save(existingUser);
         }
