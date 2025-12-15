@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -49,14 +50,18 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        if (user.getIdUser() != null && user.getIdUser().equals(0)) { 
-            user.setIdUser(null);
-        }
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+    
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        User newUser = userService.save(user);
-        return ResponseEntity.status(201).body(newUser);
-    }
+    String passwordHasheada = encoder.encode(user.getContrasena());
+
+    user.setContrasena(passwordHasheada);
+
+    userRepository.save(user);
+
+    return ResponseEntity.ok("Usuario registrado");
+}
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
@@ -94,14 +99,18 @@ public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        User user = userRepository.findByCorreo(request.getCorreo());
+    User user = userRepository.findByCorreo(request.getCorreo());
 
-        if (user != null && user.getContrasena().equals(request.getContrasena())) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
-        }
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    if (user != null && encoder.matches(request.getContrasena(), user.getContrasena())) {
+        
+        return ResponseEntity.ok(user);
+        
+    } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
     }
+}
 }
 
    
