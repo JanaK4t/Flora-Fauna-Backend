@@ -12,4 +12,5 @@ import com.example.florafauna.model.Categoria;
 public interface ArticuloRepository extends JpaRepository<Articulo, Integer>{
     
     List<Articulo> findByCategoria(Categoria categoria);
+    Articulo findByNombre(String nombre);
 }

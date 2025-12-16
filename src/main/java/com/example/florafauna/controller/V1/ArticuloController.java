@@ -1,6 +1,7 @@
 package com.example.florafauna.controller.V1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,8 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.Map;
+
 import com.example.florafauna.service.ArticuloService;
 import com.example.florafauna.model.Articulo;
+import com.example.florafauna.model.User;
+import com.example.florafauna.repository.ArticuloRepository;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ArticuloController {
     @Autowired
     private ArticuloService articuloService;
+
+    @Autowired
+    private ArticuloRepository articuloRepository;
 
      @GetMapping
     public ResponseEntity<List<Articulo>> getAllArticulos() {
@@ -72,5 +81,21 @@ public class ArticuloController {
         
         articuloService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/update-photo")
+    public ResponseEntity<?> updatePhoto(@RequestBody Map<String, String> payload) {
+        String nombre = payload.get("nombre");
+        String nuevaFoto = payload.get("imagenUri");
+
+        Articulo articulo = articuloRepository.findByNombre(nombre);
+
+        if (articulo != null) {
+            articulo.setImagenUri(nuevaFoto);
+            articuloRepository.save(articulo);
+            return ResponseEntity.ok(articulo);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Articulo no encontrado");
+        }
     }
 }
