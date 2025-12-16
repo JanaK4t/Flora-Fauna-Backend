@@ -42,6 +42,7 @@ public class User {
     
 
     @OneToMany
+    @JsonIgnore
     private List<Articulo> articulos = new ArrayList<>();
 
 
