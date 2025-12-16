@@ -1,6 +1,7 @@
 package com.example.florafauna.controller.V1;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,24 +51,31 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-    
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        
+        String passwordHasheada = encoder.encode(user.getContrasena());
+        user.setContrasena(passwordHasheada);
 
-    String passwordHasheada = encoder.encode(user.getContrasena());
+        User savedUser = userRepository.save(user);
 
-    user.setContrasena(passwordHasheada);
+        return ResponseEntity.ok(savedUser);
+    }
 
-    userRepository.save(user);
+    @PutMapping("/update-photo")
+    public ResponseEntity<?> updatePhoto(@RequestBody Map<String, String> payload) {
+        String correo = payload.get("correo");
+        String nuevaFoto = payload.get("foto");
 
-    return ResponseEntity.ok("Usuario registrado");
-}
+        User user = userRepository.findByCorreo(correo);
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
-        user.setIdUser(id);
-        User updatedUser = userService.save(user);
-        return ResponseEntity.ok(updatedUser);
+        if (user != null) {
+            user.setFoto(nuevaFoto);
+            userRepository.save(user);
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
     }
 
     @PatchMapping("/{id}")
