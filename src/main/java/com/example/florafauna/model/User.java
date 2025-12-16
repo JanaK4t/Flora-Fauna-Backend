@@ -33,10 +33,10 @@ public class User {
     @Column(name = "correo", length = 50,nullable = false, unique = true)
     private String correo;
 
-    @Column(name = "contrasena", length = 50,nullable = false)
+    @Column(name = "contrasena",nullable = false)
     private String contrasena;
 
-    @Column(name = "foto")
+    @Column(name = "foto", columnDefinition = "TEXT")
     private String foto;
 
     

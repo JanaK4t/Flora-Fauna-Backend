@@ -31,7 +31,7 @@ public class Articulo {
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
-    @Column(name = "imagen_uri")
+    @Column(name = "imagen_uri",columnDefinition = "TEXT")
     private String imagenUri;
 
     
