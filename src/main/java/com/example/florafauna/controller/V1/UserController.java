@@ -52,13 +52,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        
-        String passwordHasheada = encoder.encode(user.getContrasena());
-        user.setContrasena(passwordHasheada);
-
-        User savedUser = userRepository.save(user);
-
+        User savedUser = userService.save(user);
         return ResponseEntity.ok(savedUser);
     }
 

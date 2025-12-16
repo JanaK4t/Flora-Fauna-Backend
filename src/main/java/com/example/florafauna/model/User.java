@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -43,7 +42,6 @@ public class User {
     
 
     @OneToMany
-    @JsonIgnore
     private List<Articulo> articulos = new ArrayList<>();
 
 
